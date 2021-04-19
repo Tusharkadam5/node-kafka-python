@@ -5,6 +5,10 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const cors = require("cors");
 
+
+ const produce = require("./controllers/produce.controller")
+ const consume = require("./controllers/consume.controller")
+
  var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users.routes');
 const swaggerUi = require('swagger-ui-express'),
@@ -52,5 +56,22 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+  
+// io.on('connection', (socket) => { /* socket object may be used to send specific messages to the new connected client */
+
+//   console.log('new client connected');
+//   socket.emit('connection', null);
+// });
+
+// call the `produce` function and log an error if it occurs
+produce().catch((err) => {
+	console.error("error in producer: ", err)
+})
+
+// start the consumer, and log any errors
+consume().catch((err) => {
+	console.error("error in consumer: ", err)
+})
 
 module.exports = app;

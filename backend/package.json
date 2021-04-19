@@ -14,10 +14,12 @@
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
     "jsonwebtoken": "^8.5.1",
+    "kafkajs": "^1.15.0",
     "lodash": "^4.17.21",
     "morgan": "~1.9.1",
     "mysql2": "^2.2.5",
     "sequelize": "^6.6.2",
+    "socket.io": "^4.0.1",
     "swagger-ui-express": "^4.1.6",
     "yamljs": "^0.3.0"
   }

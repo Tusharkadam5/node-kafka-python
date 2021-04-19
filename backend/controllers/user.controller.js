@@ -122,7 +122,7 @@ console.log('condition', condition);
 
   // Find all  Users
 exports.findAll = (req, res) => {
-  const { page, size } = req.params;
+  const { page, size } = req.query;
   const { limit, offset } = getPagination(page, size);
 
     User.findAndCountAll({ limit, offset })
