@@ -80,10 +80,10 @@ exports.create = (req, res) => {
       // Save User in the database
       User.create(users)
         .then(data => {
-          res.send(data);
+          return res.send(data);
         })
         .catch(err => {
-          res.status(500).send({
+          return res.status(500).send({
             message:
               err.message || "Some error occurred while creating the User."
           });
@@ -110,10 +110,10 @@ console.log('condition', condition);
     User.findAndCountAll({ where: condition, limit, offset })
       .then(data => {
         const response = getPagingData(data, page, limit);
-        res.send(response);
+        return res.send(response);
       })
       .catch(err => {
-        res.status(500).send({
+        return res.status(500).send({
           message:
             err.message || "Some error occurred while retrieving Users."
         });
@@ -128,10 +128,10 @@ exports.findAll = (req, res) => {
     User.findAndCountAll({ limit, offset })
       .then(data => {
         const response = getPagingData(data, page, limit);
-        res.send(response);
+        return res.send(response);
       })
       .then(data => {
-        res.send(data);
+        return res.send(data);
       })
       .catch(err => {
         res.status(500).send({
@@ -147,10 +147,10 @@ exports.findOne = (req, res) => {
   console.log(id);
     User.findByPk(id)
       .then(data => {
-        res.send(data);
+        return res.send(data);
       })
       .catch(err => {
-        res.status(500).send({
+        return res.status(500).send({
           message: "Error retrieving User with id=" + id
         });
       });
@@ -165,17 +165,17 @@ exports.update = (req, res) => {
     })
       .then(num => {
         if (num == 1) {
-          res.send({
+          return res.send({
             message: "User was updated successfully."
           });
         } else {
-          res.send({
+          return res.send({
             message: `Cannot update User with id=${id}. Maybe User was not found or req.body is empty!`
           });
         }
       })
       .catch(err => {
-        res.status(500).send({
+        return res.status(500).send({
           message: "Error updating User with id=" + id
         });
       });

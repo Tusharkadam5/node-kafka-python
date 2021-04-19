@@ -29,15 +29,13 @@ const produce = async () => {
 	// after the produce has connected, we start an interval timer
 	setInterval(async () => {
 		try {
-			// send a message to the configured topic with
-			// the key and value formed from the current value of `i`
 			await producer.send({
 				topic,
 				acks: 1,
 				messages: [
 					{
 						key: String(i),
-						value: "this is message " + i,
+						value: "This is message " + i,
 					},
 				],
 			})

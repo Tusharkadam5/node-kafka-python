@@ -4,19 +4,13 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const cors = require("cors");
-// const server = require('http').createServer();
-// const io = require('socket.io');
 
 
-const server = require('http').createServer(express);
-const ioServer = require('socket.io')(server);
+//const server = require('http').createServer(express);
+//const ioServer = require('socket.io')(server);
 
-// io.on('connection', () => { /* … */ });
-
-
-
- const produce = require("./controllers/produce.controller")
- const consume = require("./controllers/consume.controller")(ioServer);
+ //const produce = require("./controllers/produce.controller")
+ //const consume = require("./controllers/consume.controller")(ioServer);
 
  var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users.routes');
@@ -32,7 +26,6 @@ var corsOptions = {
 app.use(cors());
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-// app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -66,22 +59,5 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-// ioServer.on('connection', (socket) => { /* socket object may be used to send specific messages to the new connected client */
-
-//   console.log('new client connected');
-//   socket.emit('connection', 'connectedconnectedconnectedconnected');
-//   socket.emit('broadcast', "Hi This is tushar from backend");
-// });
-
-// // call the `produce` function and log an error if it occurs
-produce().catch((err) => {
-	console.error("error in producer: ", err)
-})
-
-// // start the consumer, and log any errors
-consume().catch((err) => {
-	console.error("error in consumer: ", err)
-})
-
-server.listen(8000);
+// server.listen(8000);
 module.exports = app;

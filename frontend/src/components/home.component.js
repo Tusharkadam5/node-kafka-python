@@ -1,7 +1,9 @@
-import React, { Component } from "react";
+import React, { Component, useEffect } from "react";
 import socketClient  from "socket.io-client";
 import UserService from "../services/user.service";
 const SERVER = "http://localhost:8000";
+var socket = null;
+
 export default class Home extends Component {
   constructor(props) {
     super(props);
@@ -10,10 +12,10 @@ export default class Home extends Component {
       content: "Hello World!"
     };
   }
-
+  
   componentDidMount() {
-    // var socket = socketClient (SERVER);
-    var socket = socketClient('http://localhost:8000', { transports: ['websocket', 'polling', 'flashsocket'] });
+
+     socket = socketClient(SERVER, { transports: ['websocket', 'polling', 'flashsocket'] });
 
     socket.on('broadcast', (socket) => {
       console.log(socket);
@@ -23,13 +25,13 @@ export default class Home extends Component {
       });
 
     });
-    // this.setState({
-    //          content: "Hello World!"
-    //        });
-
-  
   }
-
+  componentWillUnmount() {
+    if(socket){
+     // socket.disconnect();
+    }
+  }
+  
   render() {
     return (
       <div className="container">

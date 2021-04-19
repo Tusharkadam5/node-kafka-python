@@ -51,6 +51,7 @@ export default class Register extends Component {
     super(props);
     this.handleRegister = this.handleRegister.bind(this);
     this.onChangeFirstName = this.onChangeFirstName.bind(this);
+    this.onChangeLastName = this.onChangeLastName.bind(this);
     this.onChangeEmail = this.onChangeEmail.bind(this);
     this.onChangePassword = this.onChangePassword.bind(this);
 
@@ -69,7 +70,7 @@ export default class Register extends Component {
       firstname: e.target.value
     });
   }
- onChangeLastName(e) {
+  onChangeLastName(e) {
     this.setState({
       lastname: e.target.value
     });
@@ -104,10 +105,13 @@ export default class Register extends Component {
         this.state.password
       ).then(
         response => {
+
           this.setState({
             message: response.data.message,
             successful: true
           });
+          this.props.history.push("/login");
+          window.location.reload();
         },
         error => {
           const resMessage =
