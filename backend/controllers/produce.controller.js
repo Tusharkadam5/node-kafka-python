@@ -19,11 +19,11 @@ const producer = kafka.producer()
 
 // we define an async function that writes a new message each second
 const produce = async () => {
-  try {
+ // try {
 	await producer.connect()
-} catch (err) {
-  console.error("connect produuuu " + err)
-}
+// } catch (err) {
+//   console.error("connect produuuu " + err)
+// }
 	let i = 0
 
 	// after the produce has connected, we start an interval timer

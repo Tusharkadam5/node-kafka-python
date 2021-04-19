@@ -12,36 +12,22 @@ export default class Home extends Component {
   }
 
   componentDidMount() {
-    var socket = socketClient (SERVER);
-    socket.on('connection', () => {
-      console.log(`I'm connected with the back-end`);
-});
-socket.on('broadcast', (data) => {
-  console.log(data);
-  this.setState({
-    content: data
-  });
+    // var socket = socketClient (SERVER);
+    var socket = socketClient('http://localhost:8000', { transports: ['websocket', 'polling', 'flashsocket'] });
 
-});
+    socket.on('broadcast', (socket) => {
+      console.log(socket);
+
+      this.setState({
+        content: socket
+      });
+
+    });
     // this.setState({
     //          content: "Hello World!"
     //        });
 
-    // UserService.getPublicContent().then(
-    //   response => {
-    //     this.setState({
-    //       content: response.data
-    //     });
-    //   },
-    //   error => {
-    //     this.setState({
-    //       content:
-    //         (error.response && error.response.data) ||
-    //         error.message ||
-    //         error.toString()
-    //     });
-    //   }
-    // );
+  
   }
 
   render() {

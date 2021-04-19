@@ -1,26 +1,35 @@
 var createError = require('http-errors');
-var express = require('express');
+ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const cors = require("cors");
+// const server = require('http').createServer();
+// const io = require('socket.io');
+
+
+const server = require('http').createServer(express);
+const ioServer = require('socket.io')(server);
+
+// io.on('connection', () => { /* … */ });
+
 
 
  const produce = require("./controllers/produce.controller")
- const consume = require("./controllers/consume.controller")
+ const consume = require("./controllers/consume.controller")(ioServer);
 
  var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users.routes');
 const swaggerUi = require('swagger-ui-express'),
 swaggerDocument = require('./swagger.json');
 
-var app = express();
+ var app = express();
 
 var corsOptions = {
   origin: "http://localhost:3000"
 };
 
-app.use(cors(corsOptions));
+app.use(cors());
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 // app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
@@ -57,21 +66,22 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-  
-// io.on('connection', (socket) => { /* socket object may be used to send specific messages to the new connected client */
+// ioServer.on('connection', (socket) => { /* socket object may be used to send specific messages to the new connected client */
 
 //   console.log('new client connected');
-//   socket.emit('connection', null);
+//   socket.emit('connection', 'connectedconnectedconnectedconnected');
+//   socket.emit('broadcast', "Hi This is tushar from backend");
 // });
 
-// call the `produce` function and log an error if it occurs
+// // call the `produce` function and log an error if it occurs
 produce().catch((err) => {
 	console.error("error in producer: ", err)
 })
 
-// start the consumer, and log any errors
+// // start the consumer, and log any errors
 consume().catch((err) => {
 	console.error("error in consumer: ", err)
 })
 
+server.listen(8000);
 module.exports = app;
